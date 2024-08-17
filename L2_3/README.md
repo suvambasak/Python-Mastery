@@ -1,4 +1,75 @@
 
+# L2_3
+
+# Task for the week
+- Find the process ID the your program
+- Find what system calls are being used
+- Change the default file descriptor
+
+
+## Resources
+- [Board Work L2](./board_Work/L2_board.png)
+- [Board Work L3](./board_Work/L3_board.png)
+- [Code](./code/)
+- https://www.man7.org/linux/man-pages/man1/cat.1.html
+- https://www.man7.org/linux/man-pages/man1/time.1.html
+- https://man7.org/linux/man-pages/man1/top.1.html
+- https://www.unix.com/man-page/v7/1/cc/
+- https://linux.die.net/man/1/hexedit
+- https://man7.org/linux/man-pages/man1/strace.1.html
+- https://man7.org/linux/man-pages/man2/write.2.html
+- https://github.com/torvalds/linux
+- https://man7.org/linux/man-pages/man1/ps.1.html
+
+
+### CLIs
+
+#### Execute code
+Execute Python scripts
+```bash
+python FILENAME.py
+```
+
+Compile C souce code
+```bash
+cc FILENAME.c -o EXECUTABLE_NAME
+```
+Execute the code
+```bash
+./EXECUTABLE_NAME
+```
+
+#### Other stuff
+Look at running processes
+```bash
+top
+```
+```bash
+htop
+```
+
+Measure runtime
+```bash
+time -p PROGRAM
+```
+Read text file
+```bash
+cat FILENAME
+```
+Read machine code
+```bash
+hexedit EXECUTABLE_NAME
+```
+
+Check the system calls of process id (PID)
+```bash
+sudo strace -p PID
+```
+
+
+
+
+
 ## How a process is created from source code
 
 **Step 1: Preprocessing**
@@ -88,47 +159,3 @@ Additional steps for Python:
 1. The Python interpreter periodically performs garbage collection.
 2. Unused memory is reclaimed, and memory leaks are prevented.
 
-# CLIs
-
-#### Execute code
-Execute Python scripts
-```bash
-python FILENAME.py
-```
-
-Compile C souce code
-```bash
-cc FILENAME.c -o EXECUTABLE_NAME
-```
-Execute the code
-```bash
-./EXECUTABLE_NAME
-```
-
-#### Other stuff
-Look at running processes
-```bash
-top
-```
-```bash
-htop
-```
-
-Measure runtime
-```bash
-time -p PROGRAM
-```
-Read text file
-```bash
-cat FILENAME
-```
-Read machine code
-```bash
-hexedit EXECUTABLE_NAME
-```
-
-
-# Task for the week
-- Find the process ID the your program
-- Find what system calls are being used
-- Change the default file descriptor

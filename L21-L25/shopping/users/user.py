@@ -1,8 +1,21 @@
+
+'''
+https://docs.python.org/3/library/hashlib.html
+'''
+
+
+import hashlib
 import string
 
 
 class User:
-    def __init__(self, name: str, email: str, phone_number: str, password: str):
+    def __init__(
+        self,
+        name: str,
+        email: str,
+        phone_number: str,
+        password: str
+    ):
 
         # Check input is not empty
         for _vars in [name, email, phone_number, password]:
@@ -33,7 +46,17 @@ class User:
         self._name = name
         self._email = email
         self._phone_number = phone_number
-        self._password = password
+        self._password = self.__get_hash(password)
+
+    def __get_hash(self, password: str) -> str:
+        _hash = hashlib.sha256()
+        _hash.update(password.encode())
+        return _hash.hexdigest()
 
     def __repr__(self):
-        return f'User({self._name}, {self._email}, {self._phone_number})'
+        return f'''User(
+    Name: {self._name}, 
+    Email: {self._email}, 
+    Phone: {self._phone_number}, 
+    Hash: {self._password}
+)'''

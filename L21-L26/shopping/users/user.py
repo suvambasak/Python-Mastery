@@ -6,6 +6,8 @@ https://docs.python.org/3/library/hashlib.html
 
 import hashlib
 import string
+from shopping.users.user_status_enums import UserStatus
+from shopping.services.auth_service import EmailAuthService, PhoneAuthService
 
 
 class User:
@@ -48,15 +50,41 @@ class User:
         self._phone_number = phone_number
         self._password = self.__get_hash(password)
 
+        self.__status = UserStatus.UNVERIFIED
+
     def __get_hash(self, password: str) -> str:
         _hash = hashlib.sha256()
         _hash.update(password.encode())
         return _hash.hexdigest()
+
+    def verify_user(self) -> bool:
+        if all([self._verify_phone(), self._verify_email()]):
+            self.__status = UserStatus.ACTIVE
+            return True
+
+    def _verify_phone(self) -> bool:
+        _phone_auth = PhoneAuthService(self._phone_number)
+        _phone_auth.generate_verification_code()
+        _phone_auth.send_verification_code()
+        _code = input('Enter the verification code: ')
+        if _phone_auth.verify_code(_code):
+            self.__status = UserStatus.ONLY_PHONE_VERIFIED
+            return True
+
+    def _verify_email(self) -> bool:
+        _email_auth = EmailAuthService(self._email)
+        _email_auth.generate_verification_code()
+        _email_auth.send_verification_code()
+        _code = input('Enter the verification code: ')
+        if _email_auth.verify_code(_code):
+            self.__status = UserStatus.ONLY_EMAIL_VERIFIED
+            return True
 
     def __repr__(self):
         return f'''User(
     Name: {self._name}, 
     Email: {self._email}, 
     Phone: {self._phone_number}, 
-    Hash: {self._password}
+    Hash: {self._password},
+    Status: {self.__status}
 )'''

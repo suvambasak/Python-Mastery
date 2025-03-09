@@ -3,7 +3,8 @@ from shopping.users.user import User
 
 
 u1 = User('John Doe', 'jo@email.com', '9051446080', 'password@123')
-
+print(u1)
+u1.verify_user()
 print(u1)
 
 

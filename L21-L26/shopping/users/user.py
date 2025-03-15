@@ -3,11 +3,11 @@
 https://docs.python.org/3/library/hashlib.html
 '''
 
-
+import datetime
 import hashlib
 import string
 from shopping.users.user_status_enums import UserStatus
-from shopping.services.auth_service import EmailAuthService, PhoneAuthService
+from shopping.services.auth_service import EmailOTPService, PhoneOTPService
 
 
 class User:
@@ -49,6 +49,9 @@ class User:
         self._email = email
         self._phone_number = phone_number
         self._password = self.__get_hash(password)
+        self._user_created = datetime.datetime.strftime(
+            datetime.datetime.now(), '%Y-%m-%d %H:%M:%S'
+        )
 
         self.__status = UserStatus.UNVERIFIED
 
@@ -63,7 +66,7 @@ class User:
             return True
 
     def _verify_phone(self) -> bool:
-        _phone_auth = PhoneAuthService(self._phone_number)
+        _phone_auth = PhoneOTPService(self._phone_number)
         _phone_auth.generate_verification_code()
         _phone_auth.send_verification_code()
         _code = input('Enter the verification code: ')
@@ -72,7 +75,7 @@ class User:
             return True
 
     def _verify_email(self) -> bool:
-        _email_auth = EmailAuthService(self._email)
+        _email_auth = EmailOTPService(self._email)
         _email_auth.generate_verification_code()
         _email_auth.send_verification_code()
         _code = input('Enter the verification code: ')
@@ -86,5 +89,6 @@ class User:
     Email: {self._email}, 
     Phone: {self._phone_number}, 
     Hash: {self._password},
-    Status: {self.__status}
+    Status: {self.__status},
+    Created: {self._user_created}
 )'''

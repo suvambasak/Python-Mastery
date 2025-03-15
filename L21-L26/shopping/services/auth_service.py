@@ -4,7 +4,7 @@ import string
 import random
 
 
-class AuthService(ABC):
+class OTPService(ABC):
     def __init__(self, user_id: str):
         self._user_id = user_id
 
@@ -22,14 +22,14 @@ class AuthService(ABC):
         return code == self.__verification_code
 
 
-class EmailAuthService(AuthService):
+class EmailOTPService(OTPService):
     def send_verification_code(self):
         print(
             f'''Sending verification code to {self._user_id}'''
         )
 
 
-class PhoneAuthService(AuthService):
+class PhoneOTPService(OTPService):
     def send_verification_code(self):
         print(
             f'''Sending verification code to {self._user_id}'''

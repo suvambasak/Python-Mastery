@@ -60,6 +60,9 @@ class User:
         _hash.update(password.encode())
         return _hash.hexdigest()
 
+    def authenticate(self, password: str) -> bool:
+        return self._password == self.__get_hash(password)
+
     def verify_user(self) -> bool:
         if all([self._verify_phone(), self._verify_email()]):
             self.__status = UserStatus.ACTIVE

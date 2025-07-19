@@ -54,6 +54,10 @@ class User:
         )
 
         self.__status = UserStatus.UNVERIFIED
+        self._is_seller = False
+
+    def set_seller(self) -> None:
+        self._is_seller = True
 
     def __get_hash(self, password: str) -> str:
         _hash = hashlib.sha256()
